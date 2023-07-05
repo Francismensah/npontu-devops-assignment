@@ -2,11 +2,6 @@
 
 This repository provides an example of how to Dockerize a Laravel and MySQL application and automate the deployment process using Ansible.
 
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-[![Product Name Screen Shot][route-screenshot]](https://example.com)
-
 ## Prerequisites
 
 Before getting started, ensure that you have the following installed:
@@ -29,9 +24,9 @@ To Dockerize the Laravel and MySQL app, follow these steps:
    ```
 
 3. Update the Laravel configuration:
-- Modify the Laravel application's `config/database.php` file to use the MySQL container as the database.
-- Set the `DB_HOST` value to the MySQL service name defined in the `docker-compose.yml` file, which is "db" in this example.
-- Update other necessary configuration values, such as `DB_USERNAME`, `DB_PASSWORD`, etc.
+   - Modify the Laravel application's `config/database.php` file to use the MySQL container as the database.
+   - Set the `DB_HOST` value to the MySQL service name defined in the `docker-compose.yml` file, which is "db" in this example.
+   - Update other necessary configuration values, such as `DB_USERNAME`, `DB_PASSWORD`, etc.
 
 4. Build and start the Docker containers:
 
