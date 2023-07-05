@@ -1,0 +1,55 @@
+---
+- name: Deploy Laravel Application
+  hosts: webserver
+  become: yes
+  tasks:
+    - name: Clone Laravel project from Git
+      git:
+        repo: https://github.com/Francismensah/npontu-devops-assignment.git
+        dest: /var/www/laravel
+      tags: [clone]
+
+    - name: Install PHP dependencies
+      composer:
+        command: install
+        working_dir: /var/www/laravel
+      tags: [composer]
+
+    - name: Set Laravel .env file
+      template:
+        src: .env.j2
+        dest: /var/www/laravel/.env
+      tags: [config]
+
+    - name: Generate application key
+      command: php artisan key:generate --ansi
+      args:
+        chdir: /var/www/laravel
+      tags: [config]
+
+    - name: Set ownership and permissions
+      file:
+        path: /var/www/laravel
+        state: directory
+        owner: www-data
+        group: www-data
+        recurse: yes
+      tags: [config]
+
+    - name: Run database migrations
+      command: php artisan migrate --force
+      args:
+        chdir: /var/www/laravel
+      tags: [migrations]
+
+    - name: Clear Laravel cache
+      command: php artisan cache:clear
+      args:
+        chdir: /var/www/laravel
+      tags: [cache]
+
+    - name: Restart Apache web server
+      service:
+        name: apache2
+        state: restarted
+      tags: [restart]
